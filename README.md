@@ -1,6 +1,12 @@
 # P.A.P.E.R
+## PDF Analyser and Personalized Education Resource
 
-### 1.1 Text Extraction
+P.A.P.E.R aims to offer several compelling advantages to modern education such as adaptive learning, individualized instructions, instant feedback, streamlined content, etc. by utilizing context injection into the Quantised Llama2 Model. The following architecture outlines the proposed application.
+
+![image](https://github.com/dr4g0n7ly/P.A.P.E.R/assets/82759046/eba1c083-a245-468a-851b-2d8eb641a1f1)
+
+
+### Text Extraction
 The uploaded PDF must extract the text to perform context injection.  P.A.P.E.R uses PyPDF, a PDF to text library that makes up for accuracy losses with much faster extraction speeds.
 
 ### Large Language Model
