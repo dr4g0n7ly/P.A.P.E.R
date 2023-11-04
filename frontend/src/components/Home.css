@@ -1,0 +1,72 @@
+.homebody {
+    text-align: center;
+    margin-top: 50px;
+    margin-left: 18%;
+    margin-right: 18%;
+}
+
+.upload-div {
+    display: flex;
+    justify-content: center;
+}
+
+.upload-button {
+    display: flex;
+    color: white;
+    background-color: black;
+    justify-content: center;
+    border-radius: 10px;
+    border: 4px solid transparent;
+    margin-bottom: 25px;
+    box-shadow: rgba(0, 0, 0, 0.3) 0px 4px 6px -2px, rgba(0, 0, 0, 0.05) 0px 2px 4px -1px;
+}
+
+.upload-button:hover {
+    border: 4px solid black;
+    cursor: pointer;
+    color: black;
+    background-color: transparent;
+}
+
+.upload-txt {
+    font-size: x-large;
+    font-weight: bold;
+    padding-top: 30px;
+    margin-right: 60px;
+    cursor: pointer;
+}
+
+.uploaded-txt {
+    font-size: x-large;
+    font-weight: bold;
+    padding-top: 30px;
+    /* margin-right: 60px; */
+    cursor: pointer;
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+.uploadicon {
+    margin-bottom: -8px;
+    font-size: 60px;
+    margin-right: 10px;
+    margin-left: 25px;
+}
+
+.link {
+    color: #E76666;
+}
+
+.uploaded-btn {
+    background: none;
+	color: inherit;
+	border: none;
+	padding: 0;
+	font: inherit;
+	cursor: pointer;
+	outline: inherit;
+    font-size: x-large;
+    font-weight: bold;
+    margin-right: 60px;
+    cursor: pointer;
+}

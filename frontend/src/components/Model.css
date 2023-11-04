@@ -1,0 +1,61 @@
+.modeldiv {
+    margin-left: 15%;
+    margin-right: 15%;
+    margin-top: 120px;
+}
+
+.heading {
+    margin-top: 100px;
+    font-size: xx-large;
+    font-weight: bold;
+}
+
+p {
+    font-size: large;
+    font-weight: 550;
+}
+
+.list {
+    font-size: large;
+    font-weight: 550;
+    border: 1px solid black;
+    margin-top: 10px;
+    padding: 10px;
+}
+
+.promptbox {
+    margin-bottom: 100px;
+}
+
+.prompt {
+    display: flex;
+    justify-content: center;
+    margin-top: 150px;
+    border: 6px solid black;
+    height: 500px;
+}
+
+.qtbox {
+    text-align: right;
+    border: 6px solid black;
+    height: 50px;
+    width: 85%;
+    border-radius: 10px;
+    margin-top: 400px;
+}
+
+.prompttext {
+    text-align: right;
+    width: 95%;
+    font-weight: 300;
+    padding-right: 20px;
+    border: none;
+}
+.prompttext:active {
+    color: white;
+}
+.prompttext:focus {
+    outline-style: none;
+    box-shadow: none;
+    border-color: transparent;
+}
