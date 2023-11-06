@@ -3,7 +3,8 @@
 
 P.A.P.E.R aims to offer several compelling advantages to modern education such as adaptive learning, individualized instructions, instant feedback, streamlined content, etc. by utilizing context injection into the Quantised Llama2 Model. The following architecture outlines the proposed application.
 
-![image](https://github.com/dr4g0n7ly/P.A.P.E.R/assets/82759046/eba1c083-a245-468a-851b-2d8eb641a1f1)
+![image](https://github.com/dr4g0n7ly/P.A.P.E.R/assets/82759046/7ac5de62-0ad3-4ac2-a4ff-df57d0b21db6)
+
 
 
 ### Text Extraction
