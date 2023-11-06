@@ -1,0 +1,15 @@
+.brand {
+    text-align: center;
+    font-family: 'Lekton', sans-serif;
+    font-weight: 900;
+    font-size: xx-large;
+    margin-top: 40px;
+}
+
+.reloadlink {
+    cursor: pointer;
+}
+
+.reloadlink:hover {
+    text-decoration: underline;
+}
