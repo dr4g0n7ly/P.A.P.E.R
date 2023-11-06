@@ -1,7 +1,7 @@
 # P.A.P.E.R
 ## PDF Analyser and Personalized Education Resource
 
-P.A.P.E.R aims to offer several compelling advantages to modern education such as adaptive learning, individualized instructions, instant feedback, streamlined content, etc. by utilizing context injection into the Quantised Llama2 Model. The following architecture outlines the proposed application.
+P.A.P.E.R aims to offer several compelling advantages to modern education such as adaptive learning, individualized instructions, instant feedback, streamlined content, etc. by utilizing context injection into the Quantised Llama2 Model. The following architecture outlines the application.
 
 ![image](https://github.com/dr4g0n7ly/P.A.P.E.R/assets/82759046/7ac5de62-0ad3-4ac2-a4ff-df57d0b21db6)
 
