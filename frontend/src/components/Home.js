@@ -24,9 +24,7 @@ const Home = () => {
     const [viewChatbot, setViewChatbot] = useState(false);
     const [questions, setQuestions] = useState('');
 
-
-    // FastAPI URL 
-    const ngrok_url = 'https://5223-34-125-216-161.ngrok-free.app'
+    const ngrok_url = 'https://f878-34-168-63-91.ngrok-free.app'
 
     async function refresh(e) {
         setpdf(null);
