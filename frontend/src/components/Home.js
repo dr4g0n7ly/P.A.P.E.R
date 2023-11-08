@@ -15,7 +15,7 @@ const Home = () => {
     const [uploadStatus, setUploadStatus] = useState('');
     const [prompt, setPrompt] = useState('');
 
-    const ngrok_url = 'https://5dc2-34-34-20-30.ngrok-free.app'
+    const ngrok_url = 'https://f878-34-168-63-91.ngrok-free.app'
 
     async function refresh(e) {
         setpdf(null);
