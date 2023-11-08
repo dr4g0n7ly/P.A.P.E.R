@@ -13,7 +13,7 @@ const Home = () => {
     const [uploaded, isuploaded] = useState(false);
     const [processedText, setProcessedText] = useState('');
     const [fileloading, setFileLoading] = useState(false);
-    const [promptloading, setPromptLoading] = useState(false);
+    const [promptLoading, setPromptLoading] = useState(false);
     const [selectedFile, setSelectedFile] = useState(null);
     const [uploadStatus, setUploadStatus] = useState('');
     const [prompt, setPrompt] = useState('');
@@ -22,6 +22,7 @@ const Home = () => {
     const [viewSummary, setViewSummary] = useState(false);
     const [viewQA, setViewQA] = useState(false);
     const [viewChatbot, setViewChatbot] = useState(false);
+    const [questions, setQuestions] = useState('');
 
     const ngrok_url = 'https://f878-34-168-63-91.ngrok-free.app'
 
@@ -50,7 +51,7 @@ const Home = () => {
     };
 
     const handleProcessText = async () => {
-        setFileLoading(true);
+        setPromptLoading(true);
         const response = await fetch(ngrok_url+'/process-text', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json', },
@@ -59,9 +60,9 @@ const Home = () => {
 
         if (response.ok) {
             const data = await response.json();
-            setProcessedText(data.reply);
+            setProcessedText(data.reply.trim());
         }
-        setFileLoading(false);
+        setPromptLoading(false);
     };
 
     const handleUploadFile = async () => {
@@ -79,8 +80,11 @@ const Home = () => {
                 console.log('File Uploaded Successfully');
                 setUploadStatus(data.message); // Set the message from the API response
                 keywordsArray = [...keywordsArray, data.keywords];
-                console.log(keywordsArray);
+                console.log(keywordsArray)
                 console.log(data.questions)
+                setQuestions(data.questions.replace(/(\d+\.)\s+/g, '\n\n'));
+                console.log(questions)
+                // const filteredBlocks = questionBlocks.filter(block => block.trim() !== '');
             }
             else {
                 console.error('File upload failed');
@@ -93,28 +97,32 @@ const Home = () => {
     };
 
     const clickKeywords = () => {
-        setViewKeywords(!viewKeywords);
+        if (viewKeywords) {}
+        else setViewKeywords(!viewKeywords);
         setViewSummary(false);
         setViewQA(false);
         setViewChatbot(false);
     }
     const clickSummary = () => {
         setViewKeywords(false);
-        setViewSummary(!viewSummary);
+        if (viewSummary) {}
+        else setViewSummary(!viewSummary);
         setViewQA(false);
         setViewChatbot(false);
     }
     const clickQA = () => {
         setViewKeywords(false);
         setViewSummary(false);
-        setViewQA(!viewQA);
+        if (viewQA) {}
+        else setViewQA(!viewQA);
         setViewChatbot(false);
     }
     const clickChatbot = () => {
         setViewKeywords(false);
         setViewSummary(false);
         setViewQA(false);
-        setViewChatbot(!viewChatbot);
+        if (viewChatbot) {}
+        else setViewChatbot(!viewChatbot);
     }
 
     return (
@@ -220,31 +228,42 @@ const Home = () => {
 
                     { !fileloading && viewKeywords && (
                         <>
-                            Keywords
+                            <div className='feature-title'>Keywords</div>
                         </>
                     )
                     }
 
                     { viewSummary && (
                         <>
-                            Summary
+                            <div className='feature-title'>Summary</div>
                         </>
                     )
                     }
 
                     { viewQA && (
                         <>
-                            QA
+                            <div className='feature-title'>
+                                Sample Questions and Answers
+                            </div>
+                            <br/>
+                            <pre className='sampleQA'>{questions}</pre>
+                            <br/>
                         </>
                     )
                     }
 
                     { viewChatbot && (
                         <>
-                            Chatbot
-                            <textarea value={prompt} onChange={handleTextChange} placeholder="Enter prompt here"/>
-                            <button className="upload-btn" onClick={handleProcessText} disabled={promptloading}>Send prompt</button><br/> <br/>
-                            <textarea value={processedText} placeholder="Enter text here"/>
+                            <div className='feature-title'>Chatbot</div>
+                            <div className='prompt-div'>
+                                <textarea className='query' value={prompt} onChange={handleTextChange} placeholder="Ask a question..."/>
+                                <button className="upload-btn" onClick={handleProcessText} disabled={promptLoading}>Send prompt</button>
+                            </div>
+                            <br/>
+                            { promptLoading && (
+                                <p>Generating...</p>
+                            )}
+                            <textarea className='prompt-ans' value={processedText} placeholder=""/>
 
                         </>
                     )

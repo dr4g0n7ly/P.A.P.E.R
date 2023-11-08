@@ -1,0 +1,33 @@
+.clicked {
+  background-color: green; /* Change this to your desired color */
+  color: white; /* Change this to the text color you want */
+}
+
+.unclicked {
+  background-color: blue; /* Change this to your initial color */
+  color: white; /* Change this to the text color you want */
+}
+
+
+import React, { useState } from 'react';
+
+function App() {
+  const [isClicked, setIsClicked] = useState(false);
+
+  const handleButtonClick = () => {
+    setIsClicked(true);
+  };
+
+  // Define CSS classes for the button
+  const buttonClass = isClicked ? 'clicked' : 'unclicked';
+
+  return (
+    <div>
+      <button className={buttonClass} onClick={handleButtonClick}>
+        Click Me
+      </button>
+    </div>
+  );
+}
+
+export default App;
