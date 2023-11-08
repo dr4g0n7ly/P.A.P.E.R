@@ -1,6 +1,7 @@
 body {
     font-family: 'Lekton', sans-serif;
-    background-image: url('../public/paperbg.png');
+    /* background-image: url('../public/paperbg.png'); */
+    background-color: #F7F8EF;
     background-size: cover;
     background-repeat: repeat-y;
     background-position: center center;
