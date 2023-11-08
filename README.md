@@ -1,9 +1,10 @@
 # P.A.P.E.R
 ## PDF Analyser and Personalized Education Resource
 
-P.A.P.E.R aims to offer several compelling advantages to modern education such as adaptive learning, individualized instructions, instant feedback, streamlined content, etc. by utilizing context injection into the Quantised Llama2 Model. The following architecture outlines the proposed application.
+P.A.P.E.R aims to offer several compelling advantages to modern education such as adaptive learning, individualized instructions, instant feedback, streamlined content, etc. by utilizing context injection into the Quantised Llama2 Model. The following architecture outlines the application.
 
-![image](https://github.com/dr4g0n7ly/P.A.P.E.R/assets/82759046/eba1c083-a245-468a-851b-2d8eb641a1f1)
+![image](https://github.com/dr4g0n7ly/P.A.P.E.R/assets/82759046/7ac5de62-0ad3-4ac2-a4ff-df57d0b21db6)
+
 
 
 ### Text Extraction
@@ -21,6 +22,8 @@ As the model is inferenced on Google Colab instead of local machines, ngrok is u
 ### Frontend
 The front-end for the application is designed using Figma and built using the ReactJS framework. The FastAPI endpoints will be fetched and posted through the React components for fast client-side rendering.
 
-![image](https://github.com/dr4g0n7ly/P.A.P.E.R/assets/82759046/7f37d434-3e4b-4272-9345-f1da0bb21c17)
-![image](https://github.com/dr4g0n7ly/P.A.P.E.R/assets/82759046/8c3319b9-8698-49d0-a549-1df7c0ab6f44)
-![image](https://github.com/dr4g0n7ly/P.A.P.E.R/assets/82759046/c7ed254e-9670-42bc-aac8-3e8fc612455a)
+![image](https://github.com/dr4g0n7ly/P.A.P.E.R/assets/82759046/15574679-4bc6-4a30-a093-782cb9f8e602)
+![image](https://github.com/dr4g0n7ly/P.A.P.E.R/assets/82759046/20a719e0-3776-4589-aebe-108a9d676985)
+![image](https://github.com/dr4g0n7ly/P.A.P.E.R/assets/82759046/33f2ba2e-d4d8-4108-b9be-416250931cdd)
+
+
