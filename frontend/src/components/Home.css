@@ -70,3 +70,15 @@
     margin-right: 60px;
     cursor: pointer;
 }
+
+.new-nav {
+    display: flex;
+    justify-content: space-between;
+}
+
+.new-body {
+    margin-top: 60px;
+    margin-left: 10%;
+    margin-right: 10%;
+    margin-bottom: 60px;
+}

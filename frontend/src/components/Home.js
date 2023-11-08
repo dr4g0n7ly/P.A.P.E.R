@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 
 import './Home.css'
+import Nav from '../components/Nav';
 import { Icon } from '@iconify/react';
 
 const Home = () => {
@@ -14,13 +15,17 @@ const Home = () => {
     const [selectedFile, setSelectedFile] = useState(null);
     const [uploadStatus, setUploadStatus] = useState('');
     const [prompt, setPrompt] = useState('');
+    const [working, setWorking] = useState(false);
 
     const ngrok_url = 'https://5dc2-34-34-20-30.ngrok-free.app'
 
     async function refresh(e) {
         setpdf(null);
+        setWorking(false);
+        setLoading(false);
         updatename('UPLOAD PDF');
         isuploaded(false);
+        window.location.replace('/');
     }
 
     const handleTextChange = (e) => {
@@ -28,6 +33,7 @@ const Home = () => {
     };
 
     const handleFileChange = (e) => {
+        setLoading(false);
         setSelectedFile(e.target.files[0]);
         var file = e.target.files[0];
         setpdf(file);
@@ -57,12 +63,13 @@ const Home = () => {
     const handleUploadFile = async () => {
         if (selectedFile) {
             setLoading(true);
+            setWorking(true);
             const formData = new FormData();
             formData.append('file', selectedFile);
             const response = await fetch(ngrok_url+'/upload-pdf', {
                 method: 'POST',
                 body: formData,
-          });
+            });
             if (response.ok) {
                 const data = await response.json();
                 console.log('File Uploaded Successfully');
@@ -74,12 +81,19 @@ const Home = () => {
                 setUploadStatus('File Upload Failed. Please Try Again.');
             }
             setLoading(false);
+            setWorking(false);
         }
     };
 
     return (
 
+        <>
+
+        {!working && (
+
         <div className="homebody">
+
+            <Nav />
             
             <p style={{fontSize: 40, fontWeight: 900}}>
                 PDF Analyzer and Personalized Education Resource
@@ -130,16 +144,11 @@ const Home = () => {
                         <button className="uploaded-btn" onClick={handleUploadFile} disabled={loading}>Upload {name}</button>
                     </div>
                 </div>
-                <p>{uploadStatus}</p>
-                <textarea value={prompt} onChange={handleTextChange} placeholder="Enter prompt here"/>
-                <button className="upload-btn" onClick={handleProcessText} disabled={loading}>Send prompt</button><br/> <br/>
-                <textarea value={processedText} placeholder="Enter text here"/>
                 <br />
                 {/* <button onClick={handleProcessText} disabled={loading}>
                     Process Text
                 </button> */}
                 <br />
-                {loading && <p>Loading...</p>}
             </>)}
             
             {uploaded && (
@@ -148,7 +157,43 @@ const Home = () => {
                     <label htmlFor='fileuploaded' className='uploaded-txt'>Wrong PDF? Replace it.</label>
                 </>
             )}
+
         </div>
+
+        )}
+
+        {working && (
+
+            <>
+                <div className="new-body">
+                    <div className="new-nav">
+                        <div className="new-brand">
+                            <a className="reloadlink" onClick={refresh}>P.A.P.E.R</a>
+                        </div>
+                        <div>
+                            <button>Summarize</button>
+                            <button>View imp terms</button>
+                            <button>Get questions</button>
+                            <button>Ask your own questions</button>
+                        </div>
+                    </div>
+                    {loading && <p>Loading...</p>}
+                    <p>{uploadStatus}</p>
+
+                    <textarea value={prompt} onChange={handleTextChange} placeholder="Enter prompt here"/>
+                    <button className="upload-btn" onClick={handleProcessText} disabled={loading}>Send prompt</button><br/> <br/>
+                    <textarea value={processedText} placeholder="Enter text here"/>
+
+                    <br/>
+                    History:
+                    
+
+                </div>
+            </>
+
+        )}
+
+        </>
 
     )
 
