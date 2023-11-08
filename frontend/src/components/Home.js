@@ -1,28 +1,34 @@
 import React, { useState } from 'react';
+import { SpinnerDiamond } from 'spinners-react';
 
 import './Home.css'
 import Nav from '../components/Nav';
 import { Icon } from '@iconify/react';
 
 const Home = () => {
-
+    // Hooks and Variables
+    var keywordsArray = [];
     const [pdf, setpdf] = useState(null);
     const [name, updatename] = useState('UPLOAD PDF');  
     const [uploaded, isuploaded] = useState(false);
-    const [inputText, setInputText] = useState('');
     const [processedText, setProcessedText] = useState('');
-    const [loading, setLoading] = useState(false);
+    const [fileloading, setFileLoading] = useState(false);
+    const [promptloading, setPromptLoading] = useState(false);
     const [selectedFile, setSelectedFile] = useState(null);
     const [uploadStatus, setUploadStatus] = useState('');
     const [prompt, setPrompt] = useState('');
     const [working, setWorking] = useState(false);
+    const [viewKeywords, setViewKeywords] = useState(false);
+    const [viewSummary, setViewSummary] = useState(false);
+    const [viewQA, setViewQA] = useState(false);
+    const [viewChatbot, setViewChatbot] = useState(false);
 
     const ngrok_url = 'https://f878-34-168-63-91.ngrok-free.app'
 
     async function refresh(e) {
         setpdf(null);
         setWorking(false);
-        setLoading(false);
+        setFileLoading(false);
         updatename('UPLOAD PDF');
         isuploaded(false);
         window.location.replace('/');
@@ -32,8 +38,9 @@ const Home = () => {
         setPrompt(e.target.value);
     };
 
+    // Upload a PDF file
     const handleFileChange = (e) => {
-        setLoading(false);
+        setFileLoading(false);
         setSelectedFile(e.target.files[0]);
         var file = e.target.files[0];
         setpdf(file);
@@ -43,8 +50,7 @@ const Home = () => {
     };
 
     const handleProcessText = async () => {
-        setLoading(true);
-        // setProcessedText('processing');
+        setFileLoading(true);
         const response = await fetch(ngrok_url+'/process-text', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json', },
@@ -55,14 +61,12 @@ const Home = () => {
             const data = await response.json();
             setProcessedText(data.reply);
         }
-
-        setLoading(false);
-
+        setFileLoading(false);
     };
 
     const handleUploadFile = async () => {
         if (selectedFile) {
-            setLoading(true);
+            setFileLoading(true);
             setWorking(true);
             const formData = new FormData();
             formData.append('file', selectedFile);
@@ -74,16 +78,44 @@ const Home = () => {
                 const data = await response.json();
                 console.log('File Uploaded Successfully');
                 setUploadStatus(data.message); // Set the message from the API response
-                setInputText(data.extracted_text)
+                keywordsArray = [...keywordsArray, data.keywords];
+                console.log(keywordsArray);
+                console.log(data.questions)
             }
             else {
                 console.error('File upload failed');
                 setUploadStatus('File Upload Failed. Please Try Again.');
             }
-            setLoading(false);
-            setWorking(false);
+            setFileLoading(false);
+            // setWorking(true);
+            setViewKeywords(true);
         }
     };
+
+    const clickKeywords = () => {
+        setViewKeywords(!viewKeywords);
+        setViewSummary(false);
+        setViewQA(false);
+        setViewChatbot(false);
+    }
+    const clickSummary = () => {
+        setViewKeywords(false);
+        setViewSummary(!viewSummary);
+        setViewQA(false);
+        setViewChatbot(false);
+    }
+    const clickQA = () => {
+        setViewKeywords(false);
+        setViewSummary(false);
+        setViewQA(!viewQA);
+        setViewChatbot(false);
+    }
+    const clickChatbot = () => {
+        setViewKeywords(false);
+        setViewSummary(false);
+        setViewQA(false);
+        setViewChatbot(!viewChatbot);
+    }
 
     return (
 
@@ -141,7 +173,7 @@ const Home = () => {
                         <div className='uploadicon'>
                             <Icon className='uploadicon' icon="fluent:document-pdf-20-regular"/>
                         </div>
-                        <button className="uploaded-btn" onClick={handleUploadFile} disabled={loading}>Upload {name}</button>
+                        <button className="uploaded-btn" onClick={handleUploadFile} disabled={fileloading}>Upload {name}</button>
                     </div>
                 </div>
                 <br />
@@ -163,29 +195,69 @@ const Home = () => {
         )}
 
         {working && (
-
+            
             <>
                 <div className="new-body">
                     <div className="new-nav">
                         <div className="new-brand">
-                            <a className="reloadlink" onClick={refresh}>P.A.P.E.R</a>
+                            <a className="reloadlink2" onClick={refresh}>P.A.P.E.R</a>
                         </div>
                         <div>
-                            <button>Summarize</button>
-                            <button>View imp terms</button>
-                            <button>Get questions</button>
-                            <button>Ask your own questions</button>
+                            <button className='feature-btn' onClick={clickKeywords}>View Keywords</button>
+                            <button className='feature-btn'onClick={clickSummary}>Summarize</button>
+                            <button className='feature-btn'onClick={clickQA}>Get Questions</button>
+                            <button className='feature-btn'onClick={clickChatbot}>Chatbot</button>
                         </div>
                     </div>
-                    {loading && <p>Loading...</p>}
-                    <p>{uploadStatus}</p>
+                    {fileloading && 
+                        <>
+                            <p>{uploadStatus}</p>
+                            <div className='spinner'>
+                                <SpinnerDiamond/>
+                            </div>
+                        </>
+                    }
+
+                    { !fileloading && viewKeywords && (
+                        <>
+                            Keywords
+                        </>
+                    )
+                    }
+
+                    { viewSummary && (
+                        <>
+                            Summary
+                        </>
+                    )
+                    }
+
+                    { viewQA && (
+                        <>
+                            QA
+                        </>
+                    )
+                    }
+
+                    { viewChatbot && (
+                        <>
+                            Chatbot
+                            <textarea value={prompt} onChange={handleTextChange} placeholder="Enter prompt here"/>
+                            <button className="upload-btn" onClick={handleProcessText} disabled={promptloading}>Send prompt</button><br/> <br/>
+                            <textarea value={processedText} placeholder="Enter text here"/>
+
+                        </>
+                    )
+                    }
+                    
+                    {/* <p>{uploadStatus}</p>
 
                     <textarea value={prompt} onChange={handleTextChange} placeholder="Enter prompt here"/>
-                    <button className="upload-btn" onClick={handleProcessText} disabled={loading}>Send prompt</button><br/> <br/>
+                    <button className="upload-btn" onClick={handleProcessText} disabled={promptloading}>Send prompt</button><br/> <br/>
                     <textarea value={processedText} placeholder="Enter text here"/>
 
                     <br/>
-                    History:
+                    History: */}
                     
 
                 </div>

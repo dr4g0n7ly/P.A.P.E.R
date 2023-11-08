@@ -82,3 +82,41 @@
     margin-right: 10%;
     margin-bottom: 60px;
 }
+
+.feature-btn {
+    font-size: large;
+    font-family: 'Lekton', sans-serif;
+    font-weight: 700;
+    color: black;
+    background-color: #F7F8EF;
+    border-radius: 5px;
+    padding: 5px 20px 5px 20px;
+    border: 2px solid black;
+    margin: -10px 10px 25px 10px;
+    margin-bottom: 25px;
+    box-shadow: rgba(0, 0, 0, 0.3) 0px 4px 6px -2px, rgba(0, 0, 0, 0.05) 0px 2px 4px -1px;
+}
+
+.feature-btn:hover {
+    border: 2px solid #FF6939;
+    background-color: #FF6939 !important;
+    cursor: pointer;
+    color: white;
+    background-color: transparent;
+}
+
+.reloadlink2 {
+    cursor: pointer;
+    font-weight: bold;
+    font-size: x-large;
+}
+
+.reloadlink2:hover {
+    text-decoration: underline;
+}
+
+.spinner {
+    display: flex;
+    justify-content: center;
+    margin-top: 100px;
+}
