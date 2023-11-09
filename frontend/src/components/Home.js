@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import { SpinnerDiamond } from 'spinners-react';
 
 import './Home.css'
@@ -6,8 +6,8 @@ import Nav from '../components/Nav';
 import { Icon } from '@iconify/react';
 
 const Home = () => {
+
     // Hooks and Variables
-    var keywordsArray = [];
     const [pdf, setpdf] = useState(null);
     const [name, updatename] = useState('UPLOAD PDF');  
     const [uploaded, isuploaded] = useState(false);
@@ -23,10 +23,17 @@ const Home = () => {
     const [viewQA, setViewQA] = useState(false);
     const [viewChatbot, setViewChatbot] = useState(false);
     const [questions, setQuestions] = useState('');
+    const [keywords, setKeywords] = useState([]);
+    const kwActive =  viewKeywords ? 'clicked' : 'unclicked';
+    const summaryActive =  viewSummary ? 'clicked' : 'unclicked';
+    const qaActive =  viewQA ? 'clicked' : 'unclicked';
+    const chatActive =  viewChatbot ? 'clicked' : 'unclicked';
 
-    const ngrok_url = 'https://f878-34-168-63-91.ngrok-free.app'
+    // NGROK URL 
+    const ngrok_url = 'https://8493-34-125-86-191.ngrok-free.app'
 
     async function refresh(e) {
+        setKeywords([]);
         setpdf(null);
         setWorking(false);
         setFileLoading(false);
@@ -35,11 +42,7 @@ const Home = () => {
         window.location.replace('/');
     }
 
-    const handleTextChange = (e) => {
-        setPrompt(e.target.value);
-    };
-
-    // Upload a PDF file
+    // User uploads a PDF file
     const handleFileChange = (e) => {
         setFileLoading(false);
         setSelectedFile(e.target.files[0]);
@@ -50,50 +53,63 @@ const Home = () => {
         isuploaded(true);
     };
 
-    const handleProcessText = async () => {
-        setPromptLoading(true);
-        const response = await fetch(ngrok_url+'/process-text', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json', },
-            body: JSON.stringify({ prompt: prompt }),
-        });
+    useEffect(() => {
+        console.log(keywords); // This will log the updated state after each render
+    }, [keywords]);
 
-        if (response.ok) {
-            const data = await response.json();
-            setProcessedText(data.reply.trim());
-        }
-        setPromptLoading(false);
-    };
-
+    // Communicate with PAPER server
+    // Retrieves sample QAs and Keywords
     const handleUploadFile = async () => {
         if (selectedFile) {
             setFileLoading(true);
             setWorking(true);
             const formData = new FormData();
-            formData.append('file', selectedFile);
+            formData.append('file', selectedFile); // Send PDF to Server
             const response = await fetch(ngrok_url+'/upload-pdf', {
                 method: 'POST',
                 body: formData,
             });
-            if (response.ok) {
+            // Responses from the server
+            if (response.ok) { // Successful communication
                 const data = await response.json();
                 console.log('File Uploaded Successfully');
-                setUploadStatus(data.message); // Set the message from the API response
-                keywordsArray = [...keywordsArray, data.keywords];
-                console.log(keywordsArray)
-                console.log(data.questions)
-                setQuestions(data.questions.replace(/(\d+\.)\s+/g, '\n\n'));
-                console.log(questions)
-                // const filteredBlocks = questionBlocks.filter(block => block.trim() !== '');
+                setUploadStatus(data.message); // Status (fail/success) of the API response
+                const keywordsArray = data.keywords;
+                const newArray = keywordsArray.map((keyword) => keyword);
+                setKeywords((prevArray) => [...prevArray, ...newArray]);
+                console.log(keywords) // Keywords generated from PDF
+                console.log(data.questions) // Sample QAs generated
+                // Process QA text to get individual Q-A pairs
+                setQuestions(data.questions.replace(/(\d+\.)\s+/g, '\n\n')); 
             }
-            else {
+            else { // Error in communication
                 console.error('File upload failed');
                 setUploadStatus('File Upload Failed. Please Try Again.');
             }
             setFileLoading(false);
-            // setWorking(true);
             setViewKeywords(true);
+            
         }
+    };
+
+    // Prompts input by the user
+    const handleTextChange = (e) => {
+        setPrompt(e.target.value);
+    };
+
+    // Chatbot servicing
+    const handleProcessText = async () => {
+        setPromptLoading(true);
+        const response = await fetch(ngrok_url+'/process-text', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json', },
+            body: JSON.stringify({ prompt: prompt }), // Send prompts to server
+        });
+        if (response.ok) { // Successful communication
+            const data = await response.json(); // Prompt's reply (answer)
+            setProcessedText(data.reply.trim()); // Process reply
+        }
+        setPromptLoading(false);
     };
 
     const clickKeywords = () => {
@@ -149,7 +165,6 @@ const Home = () => {
                  the go.
             </p>)}
             
-
             {!uploaded && (<>
                 <br/><br/>
                 <input type="file" id='fileinput' accept=".pdf" onChange={handleFileChange} style={{display: 'none'}} />
@@ -185,9 +200,6 @@ const Home = () => {
                     </div>
                 </div>
                 <br />
-                {/* <button onClick={handleProcessText} disabled={loading}>
-                    Process Text
-                </button> */}
                 <br />
             </>)}
             
@@ -211,10 +223,10 @@ const Home = () => {
                             <a className="reloadlink2" onClick={refresh}>P.A.P.E.R</a>
                         </div>
                         <div>
-                            <button className='feature-btn' onClick={clickKeywords}>View Keywords</button>
-                            <button className='feature-btn'onClick={clickSummary}>Summarize</button>
-                            <button className='feature-btn'onClick={clickQA}>Get Questions</button>
-                            <button className='feature-btn'onClick={clickChatbot}>Chatbot</button>
+                            <button className={kwActive} onClick={clickKeywords}>View Keywords</button>
+                            <button className={qaActive} onClick={clickQA}>Get Questions</button>
+                            <button className={chatActive} onClick={clickChatbot}>Chatbot</button>
+                            <button className={summaryActive} onClick={clickSummary}>Summarize</button>
                         </div>
                     </div>
                     {fileloading && 
@@ -229,6 +241,11 @@ const Home = () => {
                     { !fileloading && viewKeywords && (
                         <>
                             <div className='feature-title'>Keywords</div>
+                            <div className='keyword-div'>
+                                {keywords.map((item, index) => (
+                                    <div className='word' key={index}>{item}</div>
+                                ))}
+                            </div>
                         </>
                     )
                     }
@@ -268,16 +285,6 @@ const Home = () => {
                         </>
                     )
                     }
-                    
-                    {/* <p>{uploadStatus}</p>
-
-                    <textarea value={prompt} onChange={handleTextChange} placeholder="Enter prompt here"/>
-                    <button className="upload-btn" onClick={handleProcessText} disabled={promptloading}>Send prompt</button><br/> <br/>
-                    <textarea value={processedText} placeholder="Enter text here"/>
-
-                    <br/>
-                    History: */}
-                    
 
                 </div>
             </>

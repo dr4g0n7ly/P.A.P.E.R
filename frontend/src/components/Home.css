@@ -83,28 +83,6 @@
     margin-bottom: 60px;
 }
 
-.feature-btn {
-    font-size: large;
-    font-family: 'Lekton', sans-serif;
-    font-weight: 700;
-    color: black;
-    background-color: #F7F8EF;
-    border-radius: 5px;
-    padding: 5px 20px 5px 20px;
-    border: 2px solid black;
-    margin: -10px 10px 25px 10px;
-    margin-bottom: 25px;
-    box-shadow: rgba(0, 0, 0, 0.3) 0px 4px 6px -2px, rgba(0, 0, 0, 0.05) 0px 2px 4px -1px;
-}
-
-.feature-btn:hover {
-    border: 2px solid #FF6939;
-    background-color: #FF6939 !important;
-    cursor: pointer;
-    color: white;
-    background-color: transparent;
-}
-
 .reloadlink2 {
     cursor: pointer;
     font-weight: bold;
@@ -194,4 +172,64 @@
     color: black;
     border: 2px solid black;
     background-color: transparent;
+}
+
+.keyword-div {
+    margin: 35px 0px 40px 0px;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    flex-direction: row;
+}
+
+.word {
+    width: 43%;
+    font-size: x-large !important;
+    margin: 10px 0px 10px 0px;
+    padding: 20px;
+    border-radius: 5px;
+    font-size: large;
+    font-weight: bold;
+    background-color: transparent;
+    border: 2px solid black;
+}
+
+.clicked {
+    font-size: large;
+    font-family: 'Lekton', sans-serif;
+    font-weight: 700;
+    color: white;
+    border: 2px solid #FF6939;
+    background-color: #FF6939 !important;
+    border-radius: 5px;
+    padding: 5px 20px 5px 20px;
+    margin: -10px 10px 25px 10px;
+    margin-bottom: 25px;
+    box-shadow: rgba(0, 0, 0, 0.3) 0px 4px 6px -2px, rgba(0, 0, 0, 0.05) 0px 2px 4px -1px;
+    transition: transform 0.3s ease-in-out;
+}
+
+.clicked:hover {
+    cursor: pointer;
+    transform: translateY(-5px);
+}
+  
+.unclicked {
+    font-size: large;
+    font-family: 'Lekton', sans-serif;
+    font-weight: 700;
+    color: black;
+    background-color: #F7F8EF;
+    border-radius: 5px;
+    padding: 5px 20px 5px 20px;
+    border: 2px solid black;
+    margin: -10px 10px 25px 10px;
+    margin-bottom: 25px;
+    box-shadow: rgba(0, 0, 0, 0.3) 0px 4px 6px -2px, rgba(0, 0, 0, 0.05) 0px 2px 4px -1px;
+    transition: transform 0.3s ease-in-out;
+}
+
+.unclicked:hover {
+    cursor: pointer;
+    transform: translateY(-5px);
 }
