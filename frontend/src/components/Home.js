@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { SpinnerDiamond } from 'spinners-react';
 
 import './Home.css'
@@ -53,8 +53,9 @@ const Home = () => {
         isuploaded(true);
     };
 
+    // save state of keywords variable
     useEffect(() => {
-        console.log(keywords); // This will log the updated state after each render
+        console.log(keywords);
     }, [keywords]);
 
     // Communicate with PAPER server
@@ -75,6 +76,7 @@ const Home = () => {
                 console.log('File Uploaded Successfully');
                 setUploadStatus(data.message); // Status (fail/success) of the API response
                 const keywordsArray = data.keywords;
+                // Process and save keywords in array
                 const newArray = keywordsArray.map((keyword) => keyword);
                 setKeywords((prevArray) => [...prevArray, ...newArray]);
                 console.log(keywords) // Keywords generated from PDF
@@ -88,7 +90,6 @@ const Home = () => {
             }
             setFileLoading(false);
             setViewKeywords(true);
-            
         }
     };
 
@@ -247,8 +248,7 @@ const Home = () => {
                                 ))}
                             </div>
                         </>
-                    )
-                    }
+                    )}
 
                     { viewSummary && (
                         <>
@@ -266,15 +266,20 @@ const Home = () => {
                             <pre className='sampleQA'>{questions}</pre>
                             <br/>
                         </>
-                    )
-                    }
+                    )}
 
                     { viewChatbot && (
                         <>
                             <div className='feature-title'>Chatbot</div>
                             <div className='prompt-div'>
-                                <textarea className='query' value={prompt} onChange={handleTextChange} placeholder="Ask a question..."/>
-                                <button className="upload-btn" onClick={handleProcessText} disabled={promptLoading}>Send prompt</button>
+                                <textarea className='query'
+                                    value={prompt} 
+                                    onChange={handleTextChange} 
+                                    placeholder="Ask a question..."
+                                />
+                                <button className="upload-btn" onClick={handleProcessText} disabled={promptLoading}> 
+                                    Send prompt
+                                </button>
                             </div>
                             <br/>
                             { promptLoading && (
@@ -283,8 +288,7 @@ const Home = () => {
                             <textarea className='prompt-ans' value={processedText} placeholder=""/>
 
                         </>
-                    )
-                    }
+                    )}
 
                 </div>
             </>
