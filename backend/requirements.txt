@@ -6,3 +6,4 @@ pdfminer.six
 transformers[sentencepiece]==4.35.0
 auto-gptq==0.4.2
 sentence_transformers==2.2.2
+yake

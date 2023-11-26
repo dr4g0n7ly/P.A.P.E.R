@@ -30,7 +30,7 @@ const Home = () => {
     const chatActive =  viewChatbot ? 'clicked' : 'unclicked';
 
     // NGROK URL 
-    const ngrok_url = 'https://8493-34-125-86-191.ngrok-free.app'
+    const ngrok_url = 'https://e1f9-34-141-247-71.ngrok-free.app'
 
     async function refresh(e) {
         setKeywords([]);
